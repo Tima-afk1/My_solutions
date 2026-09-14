@@ -1,0 +1,158 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+
+void merge_sort(std::vector<int>& array, int a, int b);
+int input(std::vector<int>& a);
+void merge(std::vector<int>& a, int left, int mid, int right);
+void output(std::vector<int> a, int n);
+
+int main()
+{
+    std::vector<int> mass;
+
+    int n = 0;
+
+    n = input(mass);
+
+    int a = 0;
+    int b = n;
+
+
+    //int diff = n / 2;
+
+    merge_sort(mass, a, b);
+
+    output(mass, n);
+}
+
+void merge_sort(std::vector<int>& array, int a, int b) {
+
+    if (b - a <= 1) return;
+
+    int diff = (b - a) / 2;
+
+    int new_a = a + diff;
+
+    int new_b = a + diff;
+
+
+    /*
+    if( b - new_a == 1 and new_b - a != 1){
+        merge_sort(array, a, new_b);
+    }
+    if (new_b - a == 1 and b - new_a != 1) {
+        merge_sort(array, new_a, b);
+    }
+    if (new_b - a != 1 and b - new_a != 1){
+        merge_sort(array, a, new_b);
+        merge_sort(array, new_a, b);
+    }
+    */
+    merge_sort(array, a, new_b);
+
+    merge_sort(array, new_a, b);
+
+    int mid = a + (b - a) / 2;
+
+    merge(array, a, mid, b);
+
+    
+}
+
+
+
+int input(std::vector<int>& a) {
+
+    int n = 0;
+    int wariable = 0;
+
+    std::cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        std::cin >> wariable;
+        a.push_back(wariable);
+    }
+    return n;
+}
+
+void output(std::vector<int> a, int n) {
+
+    int wariable = 0;
+    int i = 0;
+    for (int i = 0; i < n; i++) {
+
+        wariable = a[i];
+
+        std::cout << wariable << ' ';
+
+    }
+
+}
+/*
+void merge(std::vector<int> array, int a, int b, int new_a){       ****ПОПЫТКА******
+
+    int diff = b - a;
+
+    int reserve_to_swap_l = 0;
+    int reserve_to_swap_r = 0;
+
+    for (int i = 0; i < diff; i++) {
+
+        if () {
+
+        }
+
+    }
+
+}
+*/
+
+
+void merge(std::vector<int>& array, int a, int mid, int b) {
+
+    std::vector<int> memory;
+
+    memory.reserve(b - a);
+
+    int i = a;
+    int j = mid;
+
+    while (i < mid && j < b) {
+        if (array[i] <= array[j]) {
+            memory.push_back(array[i]);
+            i++;
+        }
+        else {
+            memory.push_back(array[j]);
+            j++;
+        }
+    }
+    while (i < mid) memory.push_back(array[i++]);
+    while (j < b)   memory.push_back(array[j++]);
+
+
+
+    i = a;
+    while (i < b) {
+        array[i] = memory[i - a];
+        i++;
+    }
+}
+
+/*
+
+void merge(std::vector<int>& a, int left, int mid, int right) { // нагло слизано с нейронки потому что сам я думать уже не смог :(
+    std::vector<int> tmp;
+    tmp.reserve(right - left);
+    int i = left, j = mid;
+    while (i < mid && j < right) {
+        if (a[i] <= a[j]) tmp.push_back(a[i++]);
+        else              tmp.push_back(a[j++]);
+    }
+    while (i < mid)   tmp.push_back(a[i++]);
+    while (j < right) tmp.push_back(a[j++]);
+    for (int k = 0; k < (int)tmp.size(); ++k)
+        a[left + k] = tmp[k];
+}*/
