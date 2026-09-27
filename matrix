@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+void input(std::vector<std::vector<int>>& matrix, int n, int m);
+void output(std::vector<std::vector<int>>& matrix, int n, int m);
+
+int main()
+{
+    std::vector<std::vector<int>> matrix;
+
+    int n = 0;
+    int m = 0;
+
+    std::cout << "введите число строк:";
+    std::cin >> n;
+
+
+    std::cout << "введите число столбцов:";
+    std::cin >> m;
+
+    input(matrix, n, m);
+    output(matrix, n, m);
+
+    return 0;
+}
+
+
+void input(std::vector<std::vector<int>>& matrix, int n, int m) {
+
+    int variable = 0;
+
+    for (int i = 0; i < n; i++) {
+        matrix.push_back(std::vector<int>());
+        for (int j = 0; j < m; j++) {
+
+            std::cin >> variable;
+            matrix[i].push_back(variable);
+
+        }
+    }
+}
+
+void output(std::vector<std::vector<int>>& matrix, int n, int m) {
+
+    std::cout << '\n';
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+
+            std::cout << matrix[i][j];
+            std::cout << ' ';
+
+        }
+        std::cout << '\n';
+    }
+}
