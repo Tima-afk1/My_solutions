@@ -1,0 +1,120 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+void input(std::vector<std::vector<int>>& matrix, int n, int m);
+void output(std::vector<std::vector<int>>& matrix, int n, int m);
+int island_size_search(std::vector<std::vector<int>>& matrix, int x, int y, int n, int m);
+void split(std::vector<std::vector<int>>& matrix, int x, int y, int* island_size, int n, int m);
+
+int main()
+{
+    std::vector<std::vector<int>> matrix;
+
+    int n = 0;
+    int m = 0;
+
+    std::cout << "введите число строк:";
+    std::cin >> n;
+
+
+    std::cout << "введите число столбцов:";
+    std::cin >> m;
+
+    input(matrix, n, m);
+
+    int matrix_size = 0;
+    matrix_size = n * m;
+    int max_island_size = 0;
+    int island_size = 0;
+    // нахожим точку какого-либо острова
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (matrix[i][j] == 1) {
+
+                island_size = island_size_search(matrix, i, j, n, m);
+
+                if (island_size > max_island_size) {
+                    max_island_size = island_size;
+                }
+
+            }
+        }
+    }
+
+    std::cout << max_island_size;
+
+    //output(matrix, n, m);
+
+    return 0;
+}
+
+int island_size_search(std::vector<std::vector<int>>& matrix, int x, int y, int n, int m) {
+    
+    int island_size = 0;
+
+    split(matrix, x, y, &island_size, n, m);
+
+    return island_size;
+}
+
+void split(std::vector<std::vector<int>>& matrix, int x, int y, int *island_size, int n, int m) {
+
+    *island_size += 1;
+
+    matrix[x][y] = 0;
+
+    if (x - 1 >= 0) {
+        if (matrix[x - 1][y] == 1) {
+            split(matrix, x - 1, y, island_size, n, m);
+        }
+    }
+    if (y + 1 < m) {
+        if (matrix[x][y + 1] == 1) {
+            split(matrix, x, y + 1, island_size, n, m);
+        }
+    }
+    if (x + 1 < n) {
+        if (matrix[x + 1][y] == 1) {
+            split(matrix, x + 1, y, island_size, n, m);
+        }
+    }
+    if (y - 1 >= 0) {
+        if (matrix[x][y - 1] == 1) {
+            split(matrix, x, y - 1, island_size, n, m);
+        }
+    }
+}
+
+
+
+
+void input(std::vector<std::vector<int>>& matrix, int n, int m) {
+
+    int variable = 0;
+
+    for (int i = 0; i < n; i++) {
+        matrix.push_back(std::vector<int>());
+        for (int j = 0; j < m; j++) {
+
+            std::cin >> variable;
+            matrix[i].push_back(variable);
+
+        }
+    }
+}
+
+void output(std::vector<std::vector<int>>& matrix, int n, int m) {
+
+    std::cout << '\n';
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+
+            std::cout << matrix[i][j];
+            std::cout << ' ';
+
+        }
+        std::cout << '\n';
+    }
+}
