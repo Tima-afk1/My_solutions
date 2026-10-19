@@ -1,0 +1,30 @@
+#include <iostream>
+#include <complex>
+
+
+template <typename T, typename R, typename S, typename O>
+auto beam_waist_at_z(T omega_0, R z, S lambda, O n) {
+
+    auto z_r = 3.14 * omega_0 * omega_0 * n / lambda;
+    using Y = std::common_type_t<S, O>;
+    using C = std::common_type_t<R, Y>;
+
+    std::common_type_t<T, C> omega_z = omega_0 * sqrt(1 + (z * z/(z_r * z_r)));
+
+    return omega_z;
+}
+
+int main() {
+
+    double omega_0 = 2.1;
+    float z = 3.51;
+    double lambda = 632.1;
+    int n = 5;
+
+
+    double a = beam_waist_at_z(omega_0, z, lambda, n);
+    
+    std::cout << "Phase shift (complex): " << a << " rad\n";
+
+    return 0;
+}
