@@ -1,0 +1,30 @@
+#include <iostream>
+#include <complex>
+
+
+
+template <typename T>
+concept OpticallyTransmissive = requires(T a) {
+    { std::norm(a) };
+    a * 1.0;
+};
+
+
+template <typename T>
+requires OpticallyTransmissive<T>
+double conculations(double n, T E) {
+
+    auto I = 0.5 * 1 * 1 * n * std::norm(E);
+    return I;
+}
+
+int main() {
+
+    std::complex<double> E(1.5, 1.0);
+
+    double a = conculations(1.5, /*E*/ 'g');
+    
+    std::cout << "Phase shift (complex): " << a << " rad\n";
+
+    return 0;
+}
